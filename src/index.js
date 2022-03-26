@@ -2,11 +2,15 @@ const fastify = require('fastify')({
     logger: true
 });
 
+const swagger = require('./utils/swagger')
+
 require('dotenv').config();
 
 require('./utils/mongoose');
 
 const productRoute = require('./routes/products.routes');
+
+fastify.register(require('fastify-swagger'), swagger.options);
 
 fastify.get('/', async(request, reply) => {
     reply.send({ hello: 'world'})
